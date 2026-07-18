@@ -1,14 +1,3 @@
-"""
-Chart 7: Final Cross-Strategy Comparison Radar.
-
-Answers: "Given everything, which one wins?"
-
-The only chart in the flow where all key dimensions are viewed simultaneously
-for the final shortlist (3-5 candidates). Each metric is min-max normalized
-to 0-1 across the shortlist so axes are comparable despite different units.
-max_drawdown is inverted before normalizing (smaller magnitude = better) so
-"further out on every axis" consistently means "better" everywhere on the chart.
-"""
 from __future__ import annotations
 
 import pandas as pd
@@ -59,7 +48,8 @@ def build_final_comparison_radar(
             go.Scatterpolar(
                 r=values,
                 theta=categories + [categories[0]],
-                fill="toself"
+                fill="toself",
+                name=row["experiment_id"]
             )
         )
 

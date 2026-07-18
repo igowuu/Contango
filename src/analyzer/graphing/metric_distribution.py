@@ -1,15 +1,3 @@
-"""
-Chart 3: Metric Distribution (box/violin).
-
-Answers: "How consistent is this, not just how good on average?"
-
-Unlike charts 1 and 2, which show single point estimates per experiment, this
-shows spread within a group. Groups experiments by a chosen parameter (or
-parameter bucket) and plots the distribution of a metric per group. Wide
-boxes / long whiskers mean inconsistent results — dangerous even when the
-median looks good. This is where "great average, terrible reliability" gets
-caught.
-"""
 from __future__ import annotations
 
 import pandas as pd

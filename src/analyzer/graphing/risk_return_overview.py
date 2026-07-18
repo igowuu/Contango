@@ -1,15 +1,3 @@
-"""
-Chart 1: Risk/Return Overview Scatter.
-
-Answers: "Is anything here even worth looking at?"
-
-Every experiment is one point: annualized return vs. Sharpe ratio, with bubble
-size showing drawdown severity (bigger = worse) and color showing a chosen
-grouping. This is the triage step — you're looking for a cluster in the
-upper-right with small bubbles. Scattered points with no cluster mean this
-strategy family likely has no real edge; stop here for those before spending
-time downstream.
-"""
 from __future__ import annotations
 
 import pandas as pd

@@ -1,39 +1,36 @@
 from __future__ import annotations
 
 import logging
-from typing import NamedTuple, Any, Callable
-
-import yfinance as yf  # type: ignore[missingTypeStubs]
-
-import pandas as pd
+from typing import NamedTuple, Any, Callable, TypeVar, Generic
 
 from execution.backtester import BacktesterConfig, FillBehavior
-from execution.engine import Strategy
+from execution.engine import Strategy, MarketDataEvent
 from optimizer import (
     BacktestExperiment, 
     BacktestExperimentGrid, 
     BacktestExperimentRunner, 
     BacktestExperimentResult
 )
-from research.utils.data_normalization import normalize_yfinance_data
+
+from broker.historical_brokers import HistoricalBroker, Config
 
 
 logger = logging.getLogger(__name__)
+
+TConfig = TypeVar("TConfig", bound=Config)
 
 USD = float
 percent = float
 units = int
 
 
-class RunConfig(NamedTuple):
+class RunConfig(NamedTuple, Generic[TConfig]):
     """
-    Holds the possible configuration parameters for a `ResearchRunner`.
+    Holds the configuration parameters for a `ResearchRunner`.
     
     Attributes:
-        ticker: The ticker symbol (e.g. AAPL) to derive yfinance data from.
-        start_date: The start date (YYYY-MM-DD) to derive yfinance data from.
-        end_date: The end date (YYYY-MM-DD) to derive yfinance data from.
-        interval: The trading interval (1m, 2m, 5m, 15m, 30m, 60m, 90m, 1h, 1d, 5d, 1wk, 1mo, 3mo) to derive yfinance data from.
+        broker: The historical broker to use when polling for OHLCV data.
+        broker_config: The config matching to the broker to determine what type of data to derive.
 
         strategy_factory: A callable that returns the underlying `Strategy` to test.
         param_space: A dictionary mapping each possible parameter in the strategy to a list of the desired parameters to test.
@@ -45,10 +42,8 @@ class RunConfig(NamedTuple):
         slippage: The percent difference beteween the expected price & filled price.
         commission_per_unit: The price taxed per unit bought.
     """
-    ticker: str
-    start_date: str
-    end_date: str
-    interval: str
+    broker: HistoricalBroker[TConfig]
+    broker_config: TConfig
 
     strategy_factory: Callable[..., Strategy]
     param_space: dict[str, list[Any]]
@@ -66,33 +61,20 @@ class ResearchRunner:
     Runs backtest research & computes metrics for a `Strategy`.
     """
     @staticmethod
-    def _load_data(config: RunConfig) -> pd.DataFrame:
+    def _load_data(run_config: RunConfig[TConfig]) -> list[MarketDataEvent]:
         """
         Loads yfinance data from a `RunConfig`.
         
         Args:
-            config: The determiner for the ticker, start, end, and interval when downloading yfinance data.
+            config: The determiner for the broker & config when downloading data from it.
         
         Returns:
             A normalized pandas dataframe representation of the yfinance data.
-        
-        Raises:
-            RuntimeError: If no data was returned for the given config.
         """
-        data = yf.download( # type: ignore[unknownMemberType]
-            tickers=config.ticker,
-            start=config.start_date,
-            end=config.end_date,
-            interval=config.interval,
-        )
-
-        if data is None or data.empty:
-            raise RuntimeError(f"No data returned for {config.ticker}")
-
-        return normalize_yfinance_data(data, config.ticker)
+        return run_config.broker.get_bars(run_config.broker_config)
 
     @staticmethod
-    def _create_experiments(data: pd.DataFrame, config: RunConfig) -> list[BacktestExperiment]:
+    def _create_experiments(data: list[MarketDataEvent], config: RunConfig[TConfig]) -> list[BacktestExperiment]:
         """
         Creates all of the experiments for a `Strategy` and a given parameter space.
         
@@ -125,7 +107,7 @@ class ResearchRunner:
         ).generate()
 
     @staticmethod
-    def run(config: RunConfig, verbose_iterating: bool = True) -> list[BacktestExperimentResult]:
+    def run(config: RunConfig[TConfig], verbose_iterating: bool = True) -> list[BacktestExperimentResult]:
         """
         Downloads data and runs experiments with the given config.
         

@@ -1,14 +1,3 @@
-"""
-Chart 2c: Pairwise Heatmap Grid (small multiples).
-
-Answers: "Is the interaction real, or a coincidence of one fixed combination?"
-
-Takes the top 2 parameters by importance (from chart 2a) as the heatmap's x/y
-axes, and facets one small heatmap panel per value of a third parameter. If
-the "warm zone" found here survives across most panels, it's a robust region.
-If it only appears in one panel, it's fragile and likely overfit to that
-specific combination — discard it even if chart 1 or 2b liked it.
-"""
 from __future__ import annotations
 
 import math
@@ -48,6 +37,7 @@ def build_pairwise_heatmap_grid(
 
     n = len(facet_values)
     cols = min(n, max_cols)
+
     rows = math.ceil(n / cols)
 
     fig = make_subplots(

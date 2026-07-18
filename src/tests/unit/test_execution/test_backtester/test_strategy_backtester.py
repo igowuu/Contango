@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import pandas as pd
 
 from execution.backtester.config import BacktesterConfig, FillBehavior
 from execution.backtester.strategy_backtester import StrategyBacktester
@@ -8,29 +7,13 @@ from execution.engine.events.events import MarketDataEvent
 from execution.engine.strategy.strategy import Strategy
 
 
-def _create_dataframe() -> pd.DataFrame:
-    df = pd.DataFrame(
-        {
-            "symbol": ["AAPL", "AAPL"],
-            "open": [100.0, 101.0],
-            "high": [101.0, 102.0],
-            "low": [99.0, 100.0],
-            "close": [100.0, 101.0],
-            "volume": [1000, 1000],
-        },
-        index=pd.Index([1000, 2000], name="timestamp"),
-    )
+def _create_dataframe() -> list[MarketDataEvent]:
+    data = [
+        MarketDataEvent(1000, "AAPL", 100.0, 101.0, 99.0, 100.0, 1000),
+        MarketDataEvent(2000, "AAPL", 101.0, 102.0, 100.0, 101.0, 1000)
+    ]
 
-    return df.astype(
-        {
-            "open": "float64",
-            "high": "float64",
-            "low": "float64",
-            "close": "float64",
-            "volume": "int64",
-            "symbol": "object",
-        }
-    )
+    return data
 
 
 class BuyOnceStrategy(Strategy):

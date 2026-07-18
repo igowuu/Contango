@@ -4,6 +4,7 @@ from execution.engine.events.events import (
     AcceptedFillEvent, 
     RejectedFillEvent, 
     OrderEvent, 
+    StoplossOrderEvent,
     MarketDataEvent, 
     PortfolioSnapshotEvent
 )
@@ -11,6 +12,7 @@ from execution.engine.events.event_bus import EventBus
 
 
 __all__ = [
-    'AcceptedFillEvent', 'RejectedFillEvent', 'OrderEvent', 'MarketDataEvent', 'PortfolioSnapshotEvent',
+    'AcceptedFillEvent', 'RejectedFillEvent', 'OrderEvent', 'StoplossOrderEvent',
+    'MarketDataEvent', 'PortfolioSnapshotEvent',
     'EventBus',
 ]

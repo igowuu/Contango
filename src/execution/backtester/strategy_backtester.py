@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-import pandas as pd
-
 from execution.engine.strategy.strategy import Strategy
 from execution.engine.strategy.strategy_injector import StrategyInjector
 
@@ -9,6 +7,7 @@ from execution.engine.events.events import (
     AcceptedFillEvent, 
     RejectedFillEvent, 
     OrderEvent, 
+    StoplossOrderEvent,
     MarketDataEvent, 
     PortfolioSnapshotEvent
 )
@@ -16,6 +15,7 @@ from execution.engine.events.event_bus import EventBus
 
 from execution.engine.orders.order_api import OrderAPI
 from execution.backtester.orders.order_filler import OrderFiller
+from execution.backtester.orders.stoploss_order_manager import StoplossOrderManager
 
 from execution.backtester.portfolio.portfolio import Portfolio
 from execution.backtester.market.feed import MarketDataFeed
@@ -37,6 +37,7 @@ class StrategyBacktester:
         feed: MarketDataFeed, 
         order_api: OrderAPI,
         order_filler: OrderFiller,
+        stoploss_order_manager: StoplossOrderManager,
         portfolio: Portfolio,
         strategy: Strategy,
         strategy_injector: StrategyInjector,
@@ -50,6 +51,7 @@ class StrategyBacktester:
             feed: The feed to derive `MarketDataEvent` instances from for every bar.
             order_api: Allows the user can make `OrderEvent` instances in the event bus.
             order_filler: Fills any `OrderEvent` instances and publishes them as filled events.
+            stoploss_order_manager: Publishes `OrderEvent` instances and handles checking stoplosses upon market events.
             portfolio: Takes filled events, tracks positions & money. Publishes `PortfolioSnapshotEvent` instances.
             strategy: The user's strategy with lifecycle hooks to test.
             strategy_injector: Injects snapshot events into the strategy upon them being published.
@@ -60,14 +62,17 @@ class StrategyBacktester:
         self._strategy = strategy
         self._results_collector = results_collector
 
-        event_bus.subscribe(MarketDataEvent, order_filler.collect_market_data, priority=3)
+        event_bus.subscribe(MarketDataEvent, order_filler.collect_market_data, priority=4)
+        event_bus.subscribe(MarketDataEvent, stoploss_order_manager.check_if_stoploss_met, priority=3)
         event_bus.subscribe(MarketDataEvent, portfolio.update_equity, priority=2)
         event_bus.subscribe(MarketDataEvent, strategy.on_market_event, priority=1)
         event_bus.subscribe(MarketDataEvent, results_collector.collect_market_data_event, priority=0)
 
         event_bus.subscribe(OrderEvent, strategy.on_order_event, priority=2)
-        event_bus.subscribe(OrderEvent, order_filler.fill_order, priority=1)
+        event_bus.subscribe(OrderEvent, order_filler.fill_order_event, priority=1)
         event_bus.subscribe(OrderEvent, results_collector.collect_order_event, priority=0)
+
+        event_bus.subscribe(StoplossOrderEvent, stoploss_order_manager.collect_stoploss_order_event, priority=0)
 
         event_bus.subscribe(AcceptedFillEvent, strategy.on_accepted_fill_event, priority=2)
         event_bus.subscribe(AcceptedFillEvent, portfolio.apply_accepted_fill, priority=1)
@@ -76,7 +81,8 @@ class StrategyBacktester:
         event_bus.subscribe(RejectedFillEvent, strategy.on_rejected_fill_event, priority=1)
         event_bus.subscribe(RejectedFillEvent, results_collector.collect_rejected_fill_event, priority=0)
 
-        event_bus.subscribe(PortfolioSnapshotEvent, order_filler.collect_portfolio_snapshot, priority=2)
+        event_bus.subscribe(PortfolioSnapshotEvent, order_filler.collect_portfolio_snapshot, priority=3)
+        event_bus.subscribe(PortfolioSnapshotEvent, stoploss_order_manager.collect_portfolio_snapshot, priority=2)
         event_bus.subscribe(PortfolioSnapshotEvent, strategy_injector.inject_portfolio_event, priority=1)
         event_bus.subscribe(PortfolioSnapshotEvent, results_collector.collect_portfolio_snapshot_event, priority=0)
 
@@ -111,7 +117,7 @@ class StrategyBacktester:
     @classmethod
     def backtest(
         cls,
-        ohlcv_data: pd.DataFrame,
+        ohlcv_data: list[MarketDataEvent],
         strategy: Strategy,
         config: BacktesterConfig
     ) -> ExecutionData:
@@ -132,6 +138,7 @@ class StrategyBacktester:
             feed=MarketDataFeed(ohlcv_data, bus),
             order_api=OrderAPI(bus),
             order_filler=OrderFiller(config, bus),
+            stoploss_order_manager=StoplossOrderManager(bus),
             portfolio=Portfolio(bus, config, config.initial_cash, config.initial_position),
             strategy=strategy,
             strategy_injector=StrategyInjector(strategy),

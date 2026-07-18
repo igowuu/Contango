@@ -1,11 +1,3 @@
-"""
-Shared data preparation utilities for backtest analysis & graphing.
-
-Every chart module in this package consumes the tidy DataFrame produced by
-`results_to_dataframe` — this is the single source of truth for turning raw
-`BacktestExperimentResult` objects into something plottable. Chart files
-should never reach back into `experiment` / `backtest_metrics` directly.
-"""
 from __future__ import annotations
 
 from typing import Any
@@ -15,10 +7,6 @@ import pandas as pd
 from optimizer.experiments.backtest_experiment_result import BacktestExperimentResult
 
 
-# Columns produced by results_to_dataframe that are NOT swept strategy
-# parameters. Used by get_param_columns() to infer which columns are params
-# by exclusion, so new metrics added to Metrics don't need to be special-cased
-# everywhere else.
 _METRIC_COLUMNS = {
     "total_return", "monthly_returns", "equity_curve",
     "annual_return", "monthly_volatility", "sharpe_ratio", "calmar_ratio",

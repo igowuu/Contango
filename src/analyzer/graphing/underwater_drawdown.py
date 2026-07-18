@@ -1,14 +1,3 @@
-"""
-Chart 5: Underwater Plot (drawdown over time).
-
-Answers: "How much pain, and for how long?"
-
-Deliberately separate from chart 4: an equity curve can look fine while
-visually compressing a long, brutal underwater period. This plots
-drawdown-from-running-peak over time instead of raw account value, answering
-"could I have actually stomached holding this?" for the same shortlist used
-in chart 4.
-"""
 from __future__ import annotations
 
 import pandas as pd

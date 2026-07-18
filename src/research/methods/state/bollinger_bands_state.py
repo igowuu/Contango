@@ -12,11 +12,13 @@ class BollingerState(Enum):
     Attributes:
         BELOW_LOWER: The price is below the lower bollinger band.
         BETWEEN_LOWER_AND_MIDDLE: The price is between the lower & middle bollinger bands.
-        ABOVE_MIDDLE: The price is above the middle bollinger band.
+        BETWEEN_MIDDLE_AND_HIGHER: The price is above the middle bollinger band but below the higher one.
+        ABOVE_HIGHER: The price is above the higher bollinger band.
     """
     BELOW_LOWER = auto()
     BETWEEN_LOWER_AND_MIDDLE = auto()
-    ABOVE_MIDDLE = auto()
+    BETWEEN_MIDDLE_AND_HIGHER = auto()
+    ABOVE_HIGHER = auto()
 
 
     @classmethod
@@ -35,4 +37,6 @@ class BollingerState(Enum):
             return BollingerState.BELOW_LOWER
         if current_price < bands.middle:
             return BollingerState.BETWEEN_LOWER_AND_MIDDLE
-        return BollingerState.ABOVE_MIDDLE
+        if current_price > bands.middle:
+            return BollingerState.BETWEEN_MIDDLE_AND_HIGHER
+        return BollingerState.ABOVE_HIGHER

@@ -17,10 +17,12 @@ class BollingerBandSnapshot(NamedTuple):
         upper: The upper band for the current price.
         middle: The middle band (pure SMA) for the current price.
         lower: The lower band for the current price.
+        stdev: The population standard deviation over the lookback window.
     """
     upper: float
     middle: float
     lower: float
+    stdev: float
 
 
 class BollingerBands:
@@ -83,10 +85,12 @@ class BollingerBands:
 
         n = self._period
         variance = (self._sum_sq - self._sum * self._sum / n) / n
-        band = self._k * (variance ** 0.5)
+        stdev = variance ** 0.5
+        band = self._k * stdev
 
         return BollingerBandSnapshot(
             upper=middle + band,
             middle=middle,
             lower=middle - band,
+            stdev=stdev,
         )

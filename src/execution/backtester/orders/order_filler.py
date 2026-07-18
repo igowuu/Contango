@@ -5,7 +5,8 @@ from execution.engine.events.events import (
     RejectedFillEvent, 
     MarketDataEvent, 
     OrderEvent, 
-    PortfolioSnapshotEvent
+    PortfolioSnapshotEvent,
+    StoplossOrderEvent
 )
 from execution.engine.events.event_bus import EventBus
 
@@ -62,7 +63,7 @@ class OrderFiller:
         """
         self._last_portfolio_snapshot = event
 
-    def _apply_slippage(self, order: OrderEvent, fill_price: USD) -> USD:
+    def _apply_slippage(self, order: OrderEvent | StoplossOrderEvent, fill_price: USD) -> USD:
         """
         Adjusts fill price against the trader based on configured slippage.
         Buys fill higher, sells fill lower.
@@ -73,14 +74,14 @@ class OrderFiller:
         else:
             return fill_price / multiplier
 
-    def _calculate_commission(self, order: OrderEvent) -> USD:
+    def _calculate_commission(self, order: OrderEvent | StoplossOrderEvent) -> USD:
         """
         Calculates commission as per-unit.
         """
         per_share = abs(order.quantity) * self._config.commission_per_unit
         return per_share
 
-    def fill_order(self, order_event: OrderEvent) -> None:
+    def fill_order_event(self, order_event: OrderEvent) -> None:
         """
         Publishes an accepted or rejected filled event order whenever an `OrderEvent` is created.
 

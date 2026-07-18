@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from typing import NamedTuple, Callable, Any
-import pandas as pd
 
 from execution.engine.strategy import Strategy
+from execution.engine.events import MarketDataEvent
 from execution.backtester.config import BacktesterConfig
 
 
@@ -19,5 +19,5 @@ class BacktestExperiment(NamedTuple):
     """
     strategy_factory: Callable[..., Strategy]
     parameters: dict[str, Any]
-    dataset: pd.DataFrame
+    dataset: list[MarketDataEvent]
     config: BacktesterConfig

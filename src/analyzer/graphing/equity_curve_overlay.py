@@ -1,14 +1,3 @@
-"""
-Chart 4: Equity Curve Overlay.
-
-Answers: "What does the ride actually look like?"
-
-Operates on a shortlist only (top N by default, or an explicit list of
-experiment_ids) — this chart gets unreadable past ~8 lines. Shows raw account
-value over time so you can visually catch the difference between a steady
-climb, one lucky spike, or a flat-then-pop pattern that summary stats alone
-don't reveal.
-"""
 from __future__ import annotations
 
 import pandas as pd

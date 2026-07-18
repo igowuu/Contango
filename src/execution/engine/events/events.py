@@ -46,6 +46,24 @@ class OrderEvent(NamedTuple):
     reason: str | None = None
 
 
+class StoplossOrderEvent(NamedTuple):
+    """
+    A single trade event with a stop loss emitted by a strategy.
+
+    Attributes:
+        timestamp: The time (unix ms) which the order event was created.
+        symbol: The ticker to trade.
+        quantity: Number of units (i.e. shares) to trade (signed for buys versus sells).
+        stop_price: 
+        reason: Optional description on why the trade was made.
+    """
+    timestamp: time_unix_ms
+    symbol: str
+    quantity: units
+    stop_price: USD
+    reason: str | None = None
+
+
 class AcceptedFillEvent(NamedTuple):
     """
     A single filled trade event (an order that has been processed) that has been accepted.

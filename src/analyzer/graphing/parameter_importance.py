@@ -1,14 +1,3 @@
-"""
-Chart 2a: Parameter Importance Ranking.
-
-Answers: "Which knobs actually matter?"
-
-For each swept parameter, computes an eta-squared style sensitivity score
-against a target metric (how much of the metric's total variance is explained
-by grouping on that parameter alone). Plotted as a sorted horizontal bar
-chart. This tells you where to spend your visual attention in the following
-two charts (2b, 2c) and which parameters can be safely averaged over.
-"""
 from __future__ import annotations
 
 import pandas as pd

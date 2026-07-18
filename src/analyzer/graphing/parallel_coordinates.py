@@ -1,15 +1,3 @@
-"""
-Chart 2b: Parallel Coordinates Plot.
-
-Answers: "What do the full parameter combinations that work actually look like?"
-
-One axis per swept parameter plus a final axis for the target metric. Each
-line is one experiment, colored by outcome. Look for lines that share color
-converging through a consistent narrow band on 2-3 axes (a real interaction
-effect) vs. good lines scattered randomly across every axis (no coherent
-parameter story — likely noise/overfit). This is the only chart in the flow
-that shows all swept dimensions simultaneously.
-"""
 from __future__ import annotations
 
 import pandas as pd

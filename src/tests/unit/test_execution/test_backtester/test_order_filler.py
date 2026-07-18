@@ -66,7 +66,7 @@ def test_fill_order_publishes_accepted_fill_with_total_cost() -> None:
     filler.collect_market_data(market_event)
     filler.collect_portfolio_snapshot(_create_snapshot(cash=500.0, position=0))
 
-    filler.fill_order(OrderEvent(1000, "AAPL", 2, "buy"))
+    filler.fill_order_event(OrderEvent(1000, "AAPL", 2, "buy"))
 
     assert len(accepted) == 1
     assert accepted[0].fill_price == 100.0
@@ -82,7 +82,7 @@ def test_fill_order_rejects_when_cash_is_insufficient() -> None:
     filler.collect_market_data(_create_market_event())
     filler.collect_portfolio_snapshot(_create_snapshot(cash=50.0, position=0))
 
-    filler.fill_order(OrderEvent(1000, "AAPL", 1, "buy"))
+    filler.fill_order_event(OrderEvent(1000, "AAPL", 1, "buy"))
 
     assert len(rejected) == 1
     assert rejected[0].reason == "Insufficient available cash (slippage & commission applied)"
@@ -97,7 +97,7 @@ def test_fill_order_rejects_when_position_is_insufficient() -> None:
     filler.collect_market_data(_create_market_event())
     filler.collect_portfolio_snapshot(_create_snapshot(cash=1000.0, position=1))
 
-    filler.fill_order(OrderEvent(1000, "AAPL", -2, "sell"))
+    filler.fill_order_event(OrderEvent(1000, "AAPL", -2, "sell"))
 
     assert len(rejected) == 1
     assert rejected[0].reason == "Insufficient position"
@@ -108,7 +108,7 @@ def test_fill_order_requires_market_event_before_order() -> None:
     filler.collect_portfolio_snapshot(_create_snapshot())
 
     with pytest.raises(RuntimeError):
-        filler.fill_order(OrderEvent(1000, "AAPL", 1, None))
+        filler.fill_order_event(OrderEvent(1000, "AAPL", 1, None))
 
 
 def test_fill_order_requires_portfolio_snapshot_before_order() -> None:
@@ -116,4 +116,4 @@ def test_fill_order_requires_portfolio_snapshot_before_order() -> None:
     filler.collect_market_data(_create_market_event())
 
     with pytest.raises(RuntimeError):
-        filler.fill_order(OrderEvent(1000, "AAPL", 1, None))
+        filler.fill_order_event(OrderEvent(1000, "AAPL", 1, None))

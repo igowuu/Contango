@@ -1,15 +1,3 @@
-"""
-Chart 6: Trade Quality Scatter.
-
-Answers: "Why did it make money?"
-
-x = win_rate, y = profit_factor (or expectancy), bubble size = trade_count.
-Trade count matters here — a great expectancy on a dozen trades is noise, not
-edge. This reveals the mechanism behind the returns: grinding singles (high
-win rate, low average win) vs. swinging for rare big wins (low win rate, high
-profit factor). Two strategies can post identical total return with entirely
-different, non-interchangeable risk profiles here.
-"""
 from __future__ import annotations
 
 import pandas as pd
