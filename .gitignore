@@ -1,5 +1,6 @@
 __pycache__/
 venv/
+.venv-test/
 *.py[cod]
 *$py.class
 
@@ -24,3 +25,7 @@ build/
 dist/
 
 graphs/
+database_storage.db
+
+.env
+.env.*

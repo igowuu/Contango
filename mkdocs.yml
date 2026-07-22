@@ -1,0 +1,35 @@
+site_name: Contango
+theme:
+  name: material
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: []
+          options:
+            docstring_style: google
+            show_source: true
+            show_root_heading: true
+            merge_init_into_class: true
+            separate_signature: true
+            show_signature_annotations: true
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - Installation: getting-started/installation.md
+      - Configuration: getting-started/configuration.md
+      - Quickstart: getting-started/quickstart.md
+  - Broker:
+      - broker/index.md
+  - Data:
+      - data/index.md
+  - Trading:
+      - Indicators: trading/indicators/index.md
+      - Execution: trading/execution/index.md
+      - Optimizer: trading/optimizer/index.md
+      - Analyzer: trading/analyzer/index.md
+  - Research: research/index.md
+  - API Reference: reference/index.md
