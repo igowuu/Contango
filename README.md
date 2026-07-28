@@ -1,15 +1,15 @@
 # Contango
 
 <div align="center">
-  <img src="./docs/media/metric_distribution.gif" width="300"/>
-  <img src="./docs/media/equity_curve.gif" width="300"/>
-  <img src="./docs/media/trade_quality.gif" width="300"/>
+  <img src="./docs/media/metric_distribution.gif" width="275"/>
+  <img src="./docs/media/equity_curve.gif" width="275"/>
+  <img src="./docs/media/trade_quality.gif" width="275"/>
 </div>
 
 <div align="center">
-  <img src="./docs/media/parallel_parameter_combinations.gif" width="300"/>
-  <img src="./docs/media/risk_return_overview.gif" width="300"/>
-  <img src="./docs/media/underwater_plot.gif" width="300"/>
+  <img src="./docs/media/parallel_parameter_combinations.gif" width="275"/>
+  <img src="./docs/media/risk_return_overview.gif" width="275"/>
+  <img src="./docs/media/underwater_plot.gif" width="275"/>
 </div>
 
 <h6 align="center">
