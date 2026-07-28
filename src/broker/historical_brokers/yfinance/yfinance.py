@@ -60,7 +60,7 @@ class Yfinance(HistoricalBroker[YfinanceConfig]):
         Initializes `Yfinance`.
         
         Args:
-            calender: The calender type to follow (i.e. NYSE).
+            calendar: The calender type to follow (i.e. NYSE).
         """
         self._calendar = calendar
 
@@ -101,7 +101,7 @@ class Yfinance(HistoricalBroker[YfinanceConfig]):
         Returns a list of the bars for the given period.
         
         Args:
-            period: The yfinance period to derive bars from.
+            config: The yfinance config to derive bars from.
         
         Raises:
             RuntimeError: Upon yfinance not returning any data.
@@ -135,8 +135,8 @@ class Yfinance(HistoricalBroker[YfinanceConfig]):
         Returns the expected yfinance timestamps for the given calendar at initialization.
 
         Args:
-            config: The configuration, in which the start timestamp, end timestamp, & interval will be used to
-            derive the valid timestamps from.
+            config: The configuration, in which the start timestamp, end timestamp, & interval will be used to 
+                    derive the valid timestamps from.
         
         Returns:
             Iterable[datetime]: An iterable of valid datetime objects.

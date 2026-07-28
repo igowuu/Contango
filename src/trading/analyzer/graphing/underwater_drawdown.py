@@ -95,8 +95,7 @@ def build_underwater_plot(
         title="Underwater Plot — Drawdown From Peak Over Time",
         xaxis_title="Time",
         yaxis_title="Drawdown From Peak",
-        yaxis_tickformat=".1%",
-        template="plotly_white",
+        yaxis_tickformat=".1%"
     )
 
     if use_slider:

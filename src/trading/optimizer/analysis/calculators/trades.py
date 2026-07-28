@@ -203,7 +203,7 @@ def get_trade_metrics(context: AnalysisContext) -> TradeMetrics:
     Returns the `TradeMetrics` for the given context.
 
     Args:
-        The `AnalysisContext` object to derive data from.
+        context: The `AnalysisContext` object to derive data from.
     
     Returns:
         A `TradeMetrics` object with all the metrics relating to trades.

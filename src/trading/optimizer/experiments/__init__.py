@@ -17,12 +17,10 @@
 from __future__ import annotations
 
 from trading.optimizer.experiments.backtest_experiment import BacktestExperiment
-from trading.optimizer.experiments.backtest_experiment_grid import BacktestExperimentGrid
 from trading.optimizer.experiments.backtest_experiment_result import BacktestExperimentResult
 from trading.optimizer.experiments.backtest_experiment_runner import BacktestExperimentRunner
-
+from trading.optimizer.experiments.backtest_experiment_grid import BacktestExperimentGrid
 
 __all__ = [
-    'BacktestExperiment', 'BacktestExperimentGrid', 
-    'BacktestExperimentResult', 'BacktestExperimentRunner', 
+    'BacktestExperiment', 'BacktestExperimentResult', 'BacktestExperimentRunner', 'BacktestExperimentGrid' 
 ]

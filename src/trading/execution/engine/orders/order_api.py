@@ -55,7 +55,6 @@ class OrderAPI:
         """
         order = OrderEvent(
             market_data.timestamp,
-            symbol=symbol,
             quantity=quantity,
             reason=reason
         )
@@ -81,7 +80,6 @@ class OrderAPI:
         """
         order = StoplossOrderEvent(
             market_data.timestamp,
-            symbol=symbol,
             quantity=quantity,
             stop_price=stoploss_price,
             reason=reason

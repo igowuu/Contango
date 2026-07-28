@@ -86,7 +86,6 @@ def build_equity_curve_overlay(
         title=f"Equity Curve Overlay — ranked by {rank_by}",
         xaxis_title="Time",
         yaxis_title="Account Value (USD)",
-        template="plotly_white",
         sliders=sliders,
     )
     return fig

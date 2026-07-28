@@ -17,6 +17,8 @@
 from __future__ import annotations
 
 import os
+import plotly.io as pio # type: ignore[missingTypeStubs]
+import plotly.graph_objects as go
 
 from trading.analyzer.graphing.risk_return_overview import build_risk_return_overview
 from trading.analyzer.graphing.parameter_importance import build_parameter_importance, compute_parameter_importance
@@ -26,7 +28,6 @@ from trading.analyzer.graphing.metric_distribution import build_metric_distribut
 from trading.analyzer.graphing.equity_curve_overlay import build_equity_curve_overlay
 from trading.analyzer.graphing.underwater_drawdown import build_underwater_plot
 from trading.analyzer.graphing.trade_quality_scatter import build_trade_quality_scatter
-from trading.analyzer.graphing.final_comparison_radar import build_final_comparison_radar
 from trading.analyzer.data.data_prep import get_param_columns, results_to_dataframe
 
 from trading.optimizer.experiments.backtest_experiment_result import BacktestExperimentResult
@@ -37,8 +38,8 @@ def generate_report(
     output_dir: str,
     rank_metric: str = "calmar_ratio",
     shortlist_size: int = 8,
-    final_comparison_size: int = 5,
-    max_traces: int = 40
+    max_traces: int = 40,
+    plotly_default_template: str = "plotly_dark"
 ) -> None:
     """
     Runs the full analysis flow and writes one HTML file per chart into `output_dir`.
@@ -54,7 +55,27 @@ def generate_report(
         final_comparison_size: Number of experiments to show in the final
             radar comparison (chart 7) — keep this small (3-5) for readability.
         max_traces: Number of traces (maximum amount of graphs) for all sliders.
+        plotly_default_template: The default template for all graphs to adhere to (defaults to dark mode).
     """
+    dark_gray = go.layout.Template(
+        layout=go.Layout(
+            paper_bgcolor="#1e1e1e",
+            plot_bgcolor="#252526",
+            font=dict(color="#d4d4d4"),
+            xaxis=dict(
+                gridcolor="#444444",
+                zerolinecolor="#666666"
+            ),
+            yaxis=dict(
+                gridcolor="#444444",
+                zerolinecolor="#666666"
+            )
+        )
+    )
+
+    pio.templates["dark_gray"] = dark_gray
+    pio.templates.default = "dark_gray"
+
     os.makedirs(output_dir, exist_ok=True)
 
     df = results_to_dataframe(results)
@@ -64,23 +85,23 @@ def generate_report(
         raise ValueError("No swept parameters found — every parameter is constant across `results`.")
 
     build_risk_return_overview(df, color_by=rank_metric).write_html(    # type: ignore[unknownMemberType]
-        os.path.join(output_dir, "01_risk_return_overview.html")
+        os.path.join(output_dir, "risk_return_overview.html")
     )
 
     build_parameter_importance(df, param_columns, target_metric=rank_metric).write_html(    # type: ignore[unknownMemberType]
-        os.path.join(output_dir, "02a_parameter_importance.html")
+        os.path.join(output_dir, "parameter_importance.html")
     )
     importance_df = compute_parameter_importance(df, rank_metric, param_columns)
     ranked_params = importance_df["parameter"].tolist()
 
     build_parallel_coordinates(df, param_columns, target_metric=rank_metric, sample_size=500).write_html(   # type: ignore[unknownMemberType]
-        os.path.join(output_dir, "02b_parallel_coordinates.html")
+        os.path.join(output_dir, "parallel_coordinates.html")
     )
 
     if len(ranked_params) >= 3:
         param_x, param_y, facet_param = ranked_params[0], ranked_params[1], ranked_params[2]
         build_pairwise_heatmap_grid(df, param_x, param_y, facet_param, target_metric=rank_metric).write_html(   # type: ignore[unknownMemberType]
-            os.path.join(output_dir, "02c_pairwise_heatmap_grid.html")
+            os.path.join(output_dir, "pairwise_heatmap_grid.html")
         )
     elif len(ranked_params) == 2:
         # No third parameter to facet by (make 2d grid)
@@ -91,24 +112,17 @@ def generate_report(
         df.drop(columns=["_single_facet"], inplace=True)
 
     build_metric_distribution(df, group_by=ranked_params[0], target_metric="total_return").write_html(  # type: ignore[unknownMemberType]
-        os.path.join(output_dir, "03_metric_distribution.html")
+        os.path.join(output_dir, "metric_distribution.html")
     )
 
     build_equity_curve_overlay(df, default_top_n=shortlist_size, rank_by=rank_metric, max_traces=max_traces).write_html(   # type: ignore[unknownMemberType]
-        os.path.join(output_dir, "04_equity_curve_overlay.html")
+        os.path.join(output_dir, "equity_curve_overlay.html")
     )
 
     build_underwater_plot(df, top_n=shortlist_size, rank_by=rank_metric, max_traces=max_traces).write_html(    # type: ignore[unknownMemberType]
-        os.path.join(output_dir, "05_underwater_drawdown.html")
+        os.path.join(output_dir, "underwater_drawdown.html")
     )
 
     build_trade_quality_scatter(df, color_by=rank_metric).write_html(   # type: ignore[unknownMemberType]
-        os.path.join(output_dir, "06_trade_quality_scatter.html")
-    )
-
-    final_shortlist = (
-        df.sort_values(rank_metric, ascending=False).head(final_comparison_size)["experiment_id"].tolist()
-    )
-    build_final_comparison_radar(df, final_shortlist).write_html(   # type: ignore[unknownMemberType]
-        os.path.join(output_dir, "07_final_comparison_radar.html")
+        os.path.join(output_dir, "trade_quality_scatter.html")
     )

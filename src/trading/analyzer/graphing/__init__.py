@@ -24,11 +24,10 @@ from trading.analyzer.graphing.metric_distribution import build_metric_distribut
 from trading.analyzer.graphing.equity_curve_overlay import build_equity_curve_overlay
 from trading.analyzer.graphing.underwater_drawdown import build_underwater_plot
 from trading.analyzer.graphing.trade_quality_scatter import build_trade_quality_scatter
-from trading.analyzer.graphing.final_comparison_radar import build_final_comparison_radar
 
 
 __all__ = [
     'build_risk_return_overview', 'build_parameter_importance', 'compute_parameter_importance',
     'build_parallel_coordinates', 'build_pairwise_heatmap_grid', 'build_metric_distribution',
-    'build_equity_curve_overlay', 'build_underwater_plot', 'build_trade_quality_scatter', 'build_final_comparison_radar'
+    'build_equity_curve_overlay', 'build_underwater_plot', 'build_trade_quality_scatter'
 ]

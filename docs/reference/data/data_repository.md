@@ -1,4 +1,4 @@
 <!-- Auto-generated documentation -->
-# `src.data.data_repository`
+# `data.data_repository`
 
-::: src.data.data_repository
+::: data.data_repository

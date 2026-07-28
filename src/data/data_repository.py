@@ -57,11 +57,15 @@ class DataRepository(Generic[TConfig]):
             start_timestamp = config.start_timestamp
             end_timestamp = config.end_timestamp
             missing_timestamps = storage.get_missing_timestamps(ticker, interval, expected_timestamps)
-
             if len(missing_timestamps) != 0:
                 min_timestamp = min(missing_timestamps)
                 max_timestamp = max(missing_timestamps)
-                new_config = replace(config, start_timestamp=min_timestamp, end_timestamp=max_timestamp)
+                interval_ms = int(config.interval.value.total_seconds() * 1000)
+                new_config = replace(
+                    config,
+                    start_timestamp=min_timestamp,
+                    end_timestamp=max(max_timestamp + interval_ms, min_timestamp + interval_ms),
+                )
                 new_data = broker.get_bars(new_config)
                 storage.add_data_to_storage(interval, new_data)
 

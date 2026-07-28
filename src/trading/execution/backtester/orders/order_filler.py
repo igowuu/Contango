@@ -97,6 +97,29 @@ class OrderFiller:
         per_share = abs(order.quantity) * self._config.commission_per_unit
         return per_share
 
+    def _validate_position_transition(
+        self, order_event: OrderEvent, portfolio_snapshot: PortfolioSnapshotEvent
+    ) -> str | None:
+        """
+        Validates that an order results in a position transition given that only
+        long, single-position exposure is supported (no shorting, no pyramiding, no
+        partial closes).
+
+        Returns:
+            A rejection reason if the order is invalid, otherwise `None`.
+        """
+        position = portfolio_snapshot.position
+        quantity = order_event.quantity
+
+        if position == 0 and quantity < 0:
+            return "Shorting not supported"
+        if position > 0 and quantity > 0:
+            return "Pyramiding not supported"
+        if position > 0 and quantity < 0 and (position + quantity) != 0:
+            return "Partial position reduction not supported"
+
+        return None
+
     def fill_order_event(self, order_event: OrderEvent) -> None:
         """
         Publishes an accepted or rejected filled event order whenever an `OrderEvent` is created.
@@ -121,6 +144,17 @@ class OrderFiller:
 
         order_cost = price_with_slippage * order_event.quantity
         total_cost = order_cost + commission
+
+        # Any prohibited behavior (these are intentionally separated as they will likely be allowed in later updates).
+        invalid_reason = self._validate_position_transition(order_event, portfolio_snapshot)
+        if invalid_reason is not None:
+            self._event_bus.publish(RejectedFillEvent(
+                timestamp=market_event.timestamp,
+                market_event=market_event,
+                order_event=order_event,
+                reason=invalid_reason
+            ))
+            return
 
         if total_cost > portfolio_snapshot.cash:
             self._event_bus.publish(RejectedFillEvent(

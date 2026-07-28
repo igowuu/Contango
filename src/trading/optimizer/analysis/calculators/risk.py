@@ -137,7 +137,7 @@ def get_risk_metrics(
     
     Args:
         context: The `AnalysisContext` object to derive data from.
-        monthy_returns: The returns (in percent) per month from latest to most recent.
+        monthly_returns: The returns (in percent) per month from latest to most recent.
         max_drawdown: The worst single historical loss of the strategy.
     """
     annual_return = _get_annual_return(context.equity_curve)

@@ -59,5 +59,5 @@ def build_risk_return_overview(
         title="Risk/Return Overview — Annual Return vs. Sharpe Ratio (bubble size = drawdown severity)",
         labels={"annual_return": "Annual Return (CAGR)", "sharpe_ratio": "Sharpe Ratio"},
     )
-    fig.update_layout(template="plotly_white", xaxis_tickformat=".1%")  # type: ignore[unknownMemberType]
+    fig.update_layout(xaxis_tickformat=".1%")  # type: ignore[unknownMemberType]
     return fig

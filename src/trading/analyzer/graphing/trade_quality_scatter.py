@@ -49,5 +49,5 @@ def build_trade_quality_scatter(
         title=f"Trade Quality — Win Rate vs. {y_metric} (bubble size = trade count)",
         labels={"win_rate": "Win Rate"},
     )
-    fig.update_layout(template="plotly_white", xaxis_tickformat=".0%")  # type: ignore[unknownMemberType]
+    fig.update_layout(xaxis_tickformat=".0%")  # type: ignore[unknownMemberType]
     return fig

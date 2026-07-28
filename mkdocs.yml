@@ -7,7 +7,7 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
-          paths: []
+          paths: ["src"]
           options:
             docstring_style: google
             show_source: true
@@ -20,7 +20,6 @@ nav:
   - Home: index.md
   - Getting Started:
       - Installation: getting-started/installation.md
-      - Configuration: getting-started/configuration.md
       - Quickstart: getting-started/quickstart.md
   - Broker:
       - broker/index.md
@@ -31,5 +30,95 @@ nav:
       - Execution: trading/execution/index.md
       - Optimizer: trading/optimizer/index.md
       - Analyzer: trading/analyzer/index.md
-  - Research: research/index.md
-  - API Reference: reference/index.md
+  - API Reference:
+      - Broker:
+          - Calendar:
+              - Calendar: reference/broker/calendar/calendar.md
+              - NYSE Calendar: reference/broker/calendar/nyse_calendar.md
+          - Historical Brokers:
+              - Config Type: reference/broker/historical_brokers/config_type.md
+              - Historical Broker: reference/broker/historical_brokers/historical_broker.md
+              - yfinance:
+                  - yfinance: reference/broker/historical_brokers/yfinance/yfinance.md
+                  - yfinance Config: reference/broker/historical_brokers/yfinance/yfinance_config.md
+      - Data:
+          - Data Repository: reference/data/data_repository.md
+          - Storage:
+              - Store Market Data: reference/data/storage/store_market_data.md
+      - Research:
+          - Research Runner: reference/research/research_runner.md
+          - Research Strategies:
+              - Bollinger Band Mean Reversion:
+                  - Runner: reference/research/research_strategies/bollinger_band_mean_reversion/runner.md
+                  - Strategy: reference/research/research_strategies/bollinger_band_mean_reversion/strategy.md
+      - Trading:
+          - Analyzer:
+              - Data:
+                  - Analyze and Graph: reference/trading/analyzer/data/analyze_and_graph.md
+                  - Data Prep: reference/trading/analyzer/data/data_prep.md
+              - Graphing:
+                  - Equity Curve Overlay: reference/trading/analyzer/graphing/equity_curve_overlay.md
+                  - Metric Distribution: reference/trading/analyzer/graphing/metric_distribution.md
+                  - Pairwise Heatmap Grid: reference/trading/analyzer/graphing/pairwise_heatmap_grid.md
+                  - Parallel Coordinates: reference/trading/analyzer/graphing/parallel_coordinates.md
+                  - Parameter Importance: reference/trading/analyzer/graphing/parameter_importance.md
+                  - Risk / Return Overview: reference/trading/analyzer/graphing/risk_return_overview.md
+                  - Trade Quality Scatter: reference/trading/analyzer/graphing/trade_quality_scatter.md
+                  - Underwater Drawdown: reference/trading/analyzer/graphing/underwater_drawdown.md
+          - Execution:
+              - Backtester:
+                  - Config: reference/trading/execution/backtester/config.md
+                  - Market:
+                      - Feed: reference/trading/execution/backtester/market/feed.md
+                  - Orders:
+                      - Order Filler: reference/trading/execution/backtester/orders/order_filler.md
+                      - Stop-Loss Order Manager: reference/trading/execution/backtester/orders/stoploss_order_manager.md
+                  - Portfolio:
+                      - Portfolio: reference/trading/execution/backtester/portfolio/portfolio.md
+                  - Strategy Backtester: reference/trading/execution/backtester/strategy_backtester.md
+              - Engine:
+                  - Events:
+                      - Event Bus: reference/trading/execution/engine/events/event_bus.md
+                      - Events: reference/trading/execution/engine/events/events.md
+                  - Orders:
+                      - Order API: reference/trading/execution/engine/orders/order_api.md
+                  - Results:
+                      - Execution Data: reference/trading/execution/engine/results/execution_data.md
+                      - Results Collector: reference/trading/execution/engine/results/results_collector.md
+                  - Strategy:
+                      - Strategy: reference/trading/execution/engine/strategy/strategy.md
+                      - Strategy Injector: reference/trading/execution/engine/strategy/strategy_injector.md
+          - Indicators:
+              - Calculations:
+                  - Average True Range: reference/trading/indicators/calculations/average_true_range.md
+                  - Bollinger Bands: reference/trading/indicators/calculations/bollinger_bands.md
+                  - EMA: reference/trading/indicators/calculations/ema.md
+                  - RSI: reference/trading/indicators/calculations/rsi.md
+                  - SMA: reference/trading/indicators/calculations/sma.md
+                  - True Range: reference/trading/indicators/calculations/true_range.md
+                  - VWAP: reference/trading/indicators/calculations/vwap.md
+                  - Wilder Average: reference/trading/indicators/calculations/wilder_average.md
+              - Indicator: reference/trading/indicators/indicator.md
+              - State:
+                  - Bollinger Bands State: reference/trading/indicators/state/bollinger_bands_state.md
+                  - EMA State: reference/trading/indicators/state/ema_state.md
+                  - RSI State: reference/trading/indicators/state/rsi_state.md
+                  - SMA State: reference/trading/indicators/state/sma_state.md
+                  - VWAP State: reference/trading/indicators/state/vwap_state.md
+                  - Wilder Average State: reference/trading/indicators/state/wilder_average_state.md
+          - Optimizer:
+              - Analysis:
+                  - Builder: reference/trading/optimizer/analysis/builder.md
+                  - Calculate Metrics: reference/trading/optimizer/analysis/calculate_metrics.md
+                  - Calculators:
+                      - Drawdown: reference/trading/optimizer/analysis/calculators/drawdown.md
+                      - Returns: reference/trading/optimizer/analysis/calculators/returns.md
+                      - Risk: reference/trading/optimizer/analysis/calculators/risk.md
+                      - Trades: reference/trading/optimizer/analysis/calculators/trades.md
+                  - Context: reference/trading/optimizer/analysis/context.md
+                  - Metrics: reference/trading/optimizer/analysis/metrics.md
+              - Experiments:
+                  - Backtest Experiment: reference/trading/optimizer/experiments/backtest_experiment.md
+                  - Backtest Experiment Grid: reference/trading/optimizer/experiments/backtest_experiment_grid.md
+                  - Backtest Experiment Result: reference/trading/optimizer/experiments/backtest_experiment_result.md
+                  - Backtest Experiment Runner: reference/trading/optimizer/experiments/backtest_experiment_runner.md

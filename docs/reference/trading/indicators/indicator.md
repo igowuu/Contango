@@ -1,4 +1,4 @@
 <!-- Auto-generated documentation -->
-# `src.trading.indicators.indicator`
+# `trading.indicators.indicator`
 
-::: src.trading.indicators.indicator
+::: trading.indicators.indicator

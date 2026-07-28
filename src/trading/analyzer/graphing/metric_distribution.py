@@ -53,5 +53,5 @@ def build_metric_distribution(
         title=f"Distribution of {target_metric} by {group_by}",
         labels={group_by: group_by, target_metric: target_metric},
     )
-    fig.update_layout(template="plotly_white")  # type: ignore[unknownMemberType]
+    fig.update_layout()  # type: ignore[unknownMemberType]
     return fig

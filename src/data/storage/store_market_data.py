@@ -190,12 +190,12 @@ class DataStorage:
             symbol: The symbol to check.
             interval: The interval to check (i.e. `1m`, `5m`, etc).
             expected_timestamps: The datetimes candles are expected to exist
-                for. Must be timezone-aware (or assumed UTC if naive) since
-                stored timestamps are unix ms in UTC.
+                                 for. Must be timezone-aware (or assumed UTC if naive) since
+                                 stored timestamps are unix ms in UTC.
 
         Returns:
             list[int]: Sorted list of missing timestamps (unix ms). Empty if
-                fully cached.
+                       fully cached.
         """
         expected_ms = {
             int(

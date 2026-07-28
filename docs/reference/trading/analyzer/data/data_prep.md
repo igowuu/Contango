@@ -1,4 +1,4 @@
 <!-- Auto-generated documentation -->
-# `src.trading.analyzer.data.data_prep`
+# `trading.analyzer.data.data_prep`
 
-::: src.trading.analyzer.data.data_prep
+::: trading.analyzer.data.data_prep

@@ -26,6 +26,7 @@ dist/
 
 graphs/
 database_storage.db
+personal_*
 
 .env
 .env.*

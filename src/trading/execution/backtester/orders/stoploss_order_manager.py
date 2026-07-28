@@ -14,9 +14,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-# SPDX-FileCopyrightText: 2026 Jacob Taylor
-#
-# SPDX-License-Identifier: AGPL-3.0-or-later
 
 from __future__ import annotations
 
@@ -83,7 +80,6 @@ class StoplossOrderManager:
             quantity_to_sell = -stoploss_order.quantity
             order = OrderEvent(
                 timestamp=market_data.timestamp,
-                symbol=market_data.symbol,
                 quantity=quantity_to_sell,
                 reason="Stoploss was met."
             )

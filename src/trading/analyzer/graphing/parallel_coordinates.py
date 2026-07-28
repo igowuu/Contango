@@ -54,5 +54,5 @@ def build_parallel_coordinates(
         color_continuous_scale=px.colors.diverging.RdYlGn,
         title=f"Parameter Combinations — Parallel Coordinates (colored by {target_metric})",
     )
-    fig.update_layout(template="plotly_white")  # type: ignore[unknownMemberType]
+    fig.update_layout()  # type: ignore[unknownMemberType]
     return fig

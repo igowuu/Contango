@@ -54,6 +54,9 @@ def build_pairwise_heatmap_grid(
     n = len(facet_values)
     cols = min(n, max_cols)
 
+    if cols == 0:
+        raise ValueError("No trades were made! Could not graph the pairwise heatmap grid.")
+
     rows = math.ceil(n / cols)
 
     fig = make_subplots(
@@ -85,7 +88,6 @@ def build_pairwise_heatmap_grid(
     fig.update_layout(  # type: ignore[unknownMemberType]
         title=f"Pairwise Heatmap Grid — {param_x} × {param_y}, faceted by {facet_param} (color = {target_metric})",
         coloraxis={"colorscale": "RdYlGn", "cmin": zmin, "cmax": zmax},
-        template="plotly_white",
         height=320 * rows,
     )
     return fig

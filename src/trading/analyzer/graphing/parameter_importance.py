@@ -80,5 +80,5 @@ def build_parameter_importance(
         title=f"Parameter Importance — Sensitivity of {target_metric} to Each Parameter",
         labels={"importance": "Relative Importance (eta²)", "parameter": "Parameter"},
     )
-    fig.update_layout(template="plotly_white", yaxis={"categoryorder": "total ascending"})  # type: ignore[unknownMemberType]
+    fig.update_layout(yaxis={"categoryorder": "total ascending"})  # type: ignore[unknownMemberType]
     return fig

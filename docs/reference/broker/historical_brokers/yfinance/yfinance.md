@@ -1,4 +1,4 @@
 <!-- Auto-generated documentation -->
-# `src.broker.historical_brokers.yfinance.yfinance`
+# `broker.historical_brokers.yfinance.yfinance`
 
-::: src.broker.historical_brokers.yfinance.yfinance
+::: broker.historical_brokers.yfinance.yfinance

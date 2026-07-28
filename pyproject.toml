@@ -3,15 +3,33 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "stocks"
+name = "contango"
 version = "0.1.0"
-description = "Stock analysis and optimization tools"
+description = "A Python engine to backtest, optimize, and graph trading strategies"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "igowuu"}
+]
 requires-python = ">=3.11"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Financial and Insurance Industry",
+    "License :: OSI Approved :: AGPL-03",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Office/Business :: Financial :: Investment",
+]
 dependencies = [
+    "exchange_calendars>=4.13.2",
+    "numpy>=2.4.6",
+    "pandas>=3.0.3",
+    "plotly>=6.8.0",
+    "yfinance>=1.4.1",
 ]
 
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]
 
 [tool.pytest.ini_options]
 pythonpath = "src"
