@@ -2,25 +2,25 @@
 
 <div align="center">
     <a href="https://github.com/igowuu/Contango">
-        <img src="docs/media/metric_distribution.gif" width="275">
+        <img src="docs/media/metric_distribution.avif" width="275">
     </a>
     <a href="https://github.com/igowuu/Contango">
-        <img src="docs/media/equity_curve.gif" width="275">
+        <img src="docs/media/equity_curve.avif" width="275">
     </a>
     <a href="https://github.com/igowuu/Contango">
-        <img src="docs/media/trade_quality.gif" width="275">
+        <img src="docs/media/trade_quality.avif" width="275">
     </a>
 </div>
 
 <div align="center">
     <a href="https://github.com/igowuu/Contango">
-        <img src="docs/media/parallel_parameter_combinations.gif" width="275">
+        <img src="docs/media/parallel_parameter_combinations.avif" width="275">
     </a>
     <a href="https://github.com/igowuu/Contango">
-        <img src="docs/media/risk_return_overview.gif" width="275">
+        <img src="docs/media/risk_return_overview.avif" width="275">
     </a>
     <a href="https://github.com/igowuu/Contango">
-        <img src="docs/media/underwater_plot.gif" width="275">
+        <img src="docs/media/underwater_plot.avif" width="275">
     </a>
 </div>
 
@@ -31,16 +31,13 @@
 </h6>
 
 <p align="center">
-    <a href="https://github.com/igowuu/Contango/blob/main/LICENSE">
-        <img src="https://img.shields.io/github/license/igowuu/Contango" alt="License">
-    </a>
-    <a href="https://github.com/igowuu/Contango">
-        <img src="https://img.shields.io/github/stars/igowuu/Contango" alt="Stars">
-    </a>
     <a href="https://github.com/igowuu/Contango/commits/main">
         <img src="https://img.shields.io/github/last-commit/igowuu/Contango" alt="Last Commit">
     </a>
     <img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="Python 3.11+">
+    <a href="https://github.com/igowuu/Contango">
+        <img src="https://img.shields.io/github/stars/igowuu/Contango" alt="Stars">
+    </a>
 </p>
 
 `Contango` is a python engine to backtest, optimize, create, and graph trading strategies with ease using [Plotly](https://github.com/plotly/plotly.py). Strategies can be parameterized over tens of thousands of parameters to find the optimal regions while allowing unique strategies to be effortlessly compared amongst each other. 
