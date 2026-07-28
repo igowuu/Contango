@@ -15,8 +15,6 @@
 <h6 align="center">
     <a href="./docs/index.md">Documentation</a>
     ·
-    <a href="./CONTRIBUTING.md">Contributing</a>
-    ·
     <a href="./LICENSE">License</a>
 </h6>
 
@@ -184,10 +182,6 @@ See the [documentation](./docs/index.md) for everything not covored above - writ
     <a href="https://github.com/igowuu">igowuu</a>
   </div>
 </div>
-
-## Contributing
-
-See [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## License
 
