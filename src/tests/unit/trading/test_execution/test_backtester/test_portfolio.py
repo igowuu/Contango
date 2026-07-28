@@ -66,7 +66,7 @@ def test_apply_accepted_fill_updates_cash_position_and_snapshot() -> None:
     trade = AcceptedFillEvent(
         timestamp=1000,
         market_event=_create_market_event(close=100.0),
-        order_event=OrderEvent(1000, "AAPL", 5, "buy"),
+        order_event=OrderEvent(1000, 5, "buy"),
         fill_price=100.0,
         total_cost=500.0,
     )
@@ -81,7 +81,7 @@ def test_apply_accepted_fill_raises_when_cash_would_go_negative() -> None:
     trade = AcceptedFillEvent(
         timestamp=1000,
         market_event=_create_market_event(close=100.0),
-        order_event=OrderEvent(1000, "AAPL", 5, "buy"),
+        order_event=OrderEvent(1000, 5, "buy"),
         fill_price=100.0,
         total_cost=500.0,
     )

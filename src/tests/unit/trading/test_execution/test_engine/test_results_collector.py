@@ -31,7 +31,7 @@ def test_results_collector_stores_accepted_fill_events() -> None:
 	event = AcceptedFillEvent(
 		timestamp=1,
 		market_event=MarketDataEvent(1, "AAPL", 100.0, 101.0, 99.0, 100.5, 1000),
-		order_event=OrderEvent(1, "AAPL", 5, "buy"),
+		order_event=OrderEvent(1, 5, "buy"),
 		fill_price=100.5,
 		total_cost=502.5,
 	)
@@ -46,7 +46,7 @@ def test_results_collector_stores_rejected_fill_events() -> None:
 	event = RejectedFillEvent(
 		timestamp=1,
 		market_event=MarketDataEvent(1, "AAPL", 100.0, 101.0, 99.0, 100.5, 1000),
-		order_event=OrderEvent(1, "AAPL", 5, "buy"),
+		order_event=OrderEvent(1, 5, "buy"),
 		reason="insufficient cash",
 	)
 
@@ -57,7 +57,7 @@ def test_results_collector_stores_rejected_fill_events() -> None:
 
 def test_results_collector_stores_order_events() -> None:
 	collector = ResultsCollector()
-	event = OrderEvent(1, "AAPL", 5, "buy")
+	event = OrderEvent(1, 5, "buy")
 
 	collector.collect_order_event(event)
 

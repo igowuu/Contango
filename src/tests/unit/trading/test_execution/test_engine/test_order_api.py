@@ -48,7 +48,6 @@ def test_submit_order_publishes_order_event_with_expected_fields() -> None:
 
 	order = received[0]
 	assert order.timestamp == market_data.timestamp
-	assert order.symbol == "AAPL"
 	assert order.quantity == 25
 	assert order.reason == "test order"
 

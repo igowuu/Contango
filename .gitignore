@@ -28,5 +28,7 @@ graphs/
 database_storage.db
 personal_*
 
+site/
+
 .env
 .env.*

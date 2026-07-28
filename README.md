@@ -1,33 +1,46 @@
 # Contango
 
 <div align="center">
-  <img src="./docs/media/metric_distribution.gif" width="275"/>
-  <img src="./docs/media/equity_curve.gif" width="275"/>
-  <img src="./docs/media/trade_quality.gif" width="275"/>
+    <a href="https://github.com/igowuu/Contango">
+        <img src="docs/media/metric_distribution.gif" width="275">
+    </a>
+    <a href="https://github.com/igowuu/Contango">
+        <img src="docs/media/equity_curve.gif" width="275">
+    </a>
+    <a href="https://github.com/igowuu/Contango">
+        <img src="docs/media/trade_quality.gif" width="275">
+    </a>
 </div>
 
 <div align="center">
-  <img src="./docs/media/parallel_parameter_combinations.gif" width="275"/>
-  <img src="./docs/media/risk_return_overview.gif" width="275"/>
-  <img src="./docs/media/underwater_plot.gif" width="275"/>
+    <a href="https://github.com/igowuu/Contango">
+        <img src="docs/media/parallel_parameter_combinations.gif" width="275">
+    </a>
+    <a href="https://github.com/igowuu/Contango">
+        <img src="docs/media/risk_return_overview.gif" width="275">
+    </a>
+    <a href="https://github.com/igowuu/Contango">
+        <img src="docs/media/underwater_plot.gif" width="275">
+    </a>
 </div>
 
 <h6 align="center">
-    <a href="./docs/index.md">Documentation</a>
+    <a href="https://igowuu.github.io/Contango/">Documentation</a>
     ·
-    <a href="./LICENSE">License</a>
+    <a href="https://github.com/igowuu/Contango/blob/main/LICENSE">License</a>
 </h6>
 
 <p align="center">
-    <a href="https://pypi.org/project/contango/">
-        <img src="https://img.shields.io/pypi/dm/contango" alt="Downloads">
+    <a href="https://github.com/igowuu/Contango/blob/main/LICENSE">
+        <img src="https://img.shields.io/github/license/igowuu/Contango" alt="License">
     </a>
-    <a href="https://github.com/igowuu/contango/blob/main/LICENSE">
-        <img src="https://img.shields.io/github/license/igowuu/contango" alt="License">
+    <a href="https://github.com/igowuu/Contango">
+        <img src="https://img.shields.io/github/stars/igowuu/Contango" alt="Stars">
     </a>
-    <a href="https://github.com/igowuu/contango/actions/workflows/ci.yml">
-        <img src="https://img.shields.io/github/actions/workflow/status/igowuu/contango/ci.yml" alt="Build Status">
+    <a href="https://github.com/igowuu/Contango/commits/main">
+        <img src="https://img.shields.io/github/last-commit/igowuu/Contango" alt="Last Commit">
     </a>
+    <img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="Python 3.11+">
 </p>
 
 `Contango` is a python engine to backtest, optimize, create, and graph trading strategies with ease using [Plotly](https://github.com/plotly/plotly.py). Strategies can be parameterized over tens of thousands of parameters to find the optimal regions while allowing unique strategies to be effortlessly compared amongst each other. 
@@ -55,7 +68,7 @@ git clone https://github.com/igowuu/Contango.git && cd Contango && python3 -m ve
 git clone https://github.com/igowuu/Contango.git; cd Contango; python -m venv .venv; .venv\Scripts\Activate.ps1; pip install -r requirements.txt
 ```
 
-> See [in-depth installation docs](./docs/getting-started/installation.md) if this does not work for you.
+> See [in-depth installation docs](https://igowuu.github.io/Contango/getting-started/installation/) if this does not work for you.
 
 ## Quickstart
 
@@ -65,7 +78,7 @@ git clone https://github.com/igowuu/Contango.git; cd Contango; python -m venv .v
 python -m research.research_strategies.bollinger_band_mean_reversion.runner
 ```
 
-This backtests the strategy across a grid of parameters and writes the generated graphs (as HTML files) to `research/research_strategies/bollinger_band_mean_reversion/graphs/`. They can be opened in the browser to explore the results - see [Quickstart docs](./docs/getting-started/quickstart.md) for a walkthrough of serving them locally (e.g. with the VSCode Live Server extension) if opening the files directly doesn't render them how you would expect.
+This backtests the strategy across a grid of parameters and writes the generated graphs (as HTML files) to `research/research_strategies/bollinger_band_mean_reversion/graphs/`. They can be opened in the browser to explore the results - see [Quickstart docs](https://igowuu.github.io/Contango/getting-started/quickstart/) for a walkthrough of serving them locally (e.g. with the VSCode Live Server extension) if opening the files directly doesn't render them how you would expect.
 
 ### Create a Strategy
 
@@ -149,26 +162,24 @@ The codebase is divided into parts by responsibility:
 
 - **Backtester** - a mode that iterates through OHLCV data and simulates fills, slippage, and commissions against a config, without touching a real broker. It currently does not support pyramiding, multiple tickers, or short trades - orders that violate that will be loudly rejected. This behavior will change in the future.
 
-- **Brokers & calenders** - historical brokers translate an external data provider's format (e.g. Yahoo Finance via `Yfinance`) into `MarketDataEvent` instances. Calendars define which timestamps are actually tradeable, which the data repository uses to only fetch what's missing instead of re-pulling everything.
+- **Brokers & calendars** - historical brokers translate an external data provider's format (e.g. Yahoo Finance via `Yfinance`) into `MarketDataEvent` instances. Calendars define which timestamps are actually tradeable, which the data repository uses to only fetch what's missing instead of re-pulling everything.
 
-- **Optimizer** - takes a strategy and a parameter space, runs the full backtest per combination (`BacktestExperimentRunner`), and computes return/risk/drawdown/trade metrics for each one so that you can compare them without touching raw events yourself. See [analysis docs](./docs/trading/optimizer/analysis.md) for what each metric actually means.
+- **Optimizer** - takes a strategy and a parameter space, runs the full backtest per combination (`BacktestExperimentRunner`), and computes return/risk/drawdown/trade metrics for each one so that you can compare them without touching raw events yourself. See [analysis docs](https://igowuu.github.io/Contango/trading/optimizer/analysis/) for what each metric actually means.
 
-- **Graphing** - turns those metrics into the seven generated graphs mentioned above. They're deliberately build to expose overfitting (outliers, noise, luck). Each graph exposes something entirely different, whether it be profitability, high-risk, or whether the strategy even has an edge in the first place. See [graphing ddocs](./docs/trading/analyzer/graphing.md) for how to read them.
-
-For the full breakdown of any of these, start at [docs/index.md](./docs/index.md).
+- **Graphing** - turns those metrics into the seven generated graphs mentioned above. They're deliberately build to expose overfitting (outliers, noise, luck). Each graph exposes something entirely different, whether it be profitability, high-risk, or whether the strategy even has an edge in the first place. See [graphing docs](https://igowuu.github.io/Contango/trading/analyzer/graphing/) for how to read them.
 
 ## Usage
 
-See the [documentation](./docs/index.md) for everything not covored above - writing custom indicators, the full events reference, data repository internals, and much more.
+See the [documentation](https://igowuu.github.io/Contango/) for everything not covered above - writing custom indicators, the full events reference, data repository internals, and much more.
 
 ## Credits & acknowledgements
 
 - [Plotly](https://github.com/plotly/plotly.py) powers all graph types.
 - Historical data is sourced via [Yahoo Finance](https://finance.yahoo.com/).
 
-### Artificial intellegence usage
+### Artificial intelligence usage
 
-- Unit tests were developed with AI assistence - [Claude Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
+- Unit tests were developed with AI assistance - [Claude Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
 - Code reviews were conducted by AI to help debug code - [Claude Sonnet 5](https://www.anthropic.com/news/claude-sonnet-5)
 
 **Developers:**
@@ -185,4 +196,4 @@ See the [documentation](./docs/index.md) for everything not covored above - writ
 
 ## License
 
-See [LICENSE](./LICENSE)
+See [LICENSE](https://github.com/igowuu/Contango/blob/main/LICENSE)
