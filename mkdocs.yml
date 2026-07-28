@@ -22,14 +22,17 @@ nav:
       - Installation: getting-started/installation.md
       - Quickstart: getting-started/quickstart.md
   - Broker:
-      - broker/index.md
+      - Calendar: broker/calendar.md
+      - Historical Brokers: broker/historical-brokers.md
   - Data:
-      - data/index.md
+      - Data Repository: data/repository.md
   - Trading:
-      - Indicators: trading/indicators/index.md
-      - Execution: trading/execution/index.md
-      - Optimizer: trading/optimizer/index.md
-      - Analyzer: trading/analyzer/index.md
+      - Indicators: trading/indicators/indicators.md
+      - Backtester: trading/execution/backtester.md
+      - Engine: trading/execution/engine.md
+      - Optimizer Analysis: trading/optimizer/analysis.md
+      - Experiments: trading/optimizer/experiments.md
+      - Graphing: trading/analyzer/graphing.md
   - API Reference:
       - Broker:
           - Calendar:

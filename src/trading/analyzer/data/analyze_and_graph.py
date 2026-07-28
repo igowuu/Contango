@@ -18,7 +18,7 @@ from __future__ import annotations
 
 import os
 import plotly.io as pio # type: ignore[missingTypeStubs]
-import plotly.graph_objects as go
+import plotly.graph_objects as go   # type: ignore[missingTypeStubs]
 
 from trading.analyzer.graphing.risk_return_overview import build_risk_return_overview
 from trading.analyzer.graphing.parameter_importance import build_parameter_importance, compute_parameter_importance
@@ -38,8 +38,7 @@ def generate_report(
     output_dir: str,
     rank_metric: str = "calmar_ratio",
     shortlist_size: int = 8,
-    max_traces: int = 40,
-    plotly_default_template: str = "plotly_dark"
+    max_traces: int = 40
 ) -> None:
     """
     Runs the full analysis flow and writes one HTML file per chart into `output_dir`.
@@ -48,14 +47,11 @@ def generate_report(
         results: The list of BacktestExperimentResult from ResearchRunner.run(config).
         output_dir: Directory to write the HTML files into (created if missing).
         rank_metric: Metric used to rank/shortlist experiments throughout
-            (charts 1 color, 4/5 selection, 7 selection). Defaults to
-            "calmar_ratio" since it's risk-adjusted.
+                     (charts 1 color, 4/5 selection, 7 selection). Defaults to
+                     "calmar_ratio" since it's risk-adjusted.
         shortlist_size: Number of experiments to show in the equity curve
-            overlay (chart 4) and underwater plot (chart 5).
-        final_comparison_size: Number of experiments to show in the final
-            radar comparison (chart 7) — keep this small (3-5) for readability.
+                        overlay (chart 4) and underwater plot (chart 5).
         max_traces: Number of traces (maximum amount of graphs) for all sliders.
-        plotly_default_template: The default template for all graphs to adhere to (defaults to dark mode).
     """
     dark_gray = go.layout.Template(
         layout=go.Layout(

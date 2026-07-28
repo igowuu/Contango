@@ -1,6 +1,6 @@
 # Contango
 
-Contango is a python engine for backtesting, optimizing, and graphing trading strategies. This covers everything not already in the [README](../README.md) - the strategy/event module, optimizer, brokers, calenders, indicators, and how to read the generated graphs.
+Contango is a python engine for backtesting, optimizing, and graphing trading strategies. This covers everything not already in the README - the strategy/event module, optimizer, brokers, calenders, indicators, and how to read the generated graphs.
 
 If you are new, start with the **Getting Started** section. If you already have a strategy running and want to understand a specific piece (events, the optimizer, a graph type), jump straight inot the relevant section below.
 
