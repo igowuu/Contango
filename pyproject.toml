@@ -15,7 +15,7 @@ requires-python = ">=3.11"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Financial and Insurance Industry",
-    "License :: OSI Approved :: AGPL-03",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)"
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Topic :: Office/Business :: Financial :: Investment",
@@ -27,6 +27,11 @@ dependencies = [
     "plotly>=6.8.0",
     "yfinance>=1.4.1",
 ]
+
+[project.urls]
+Homepage = "https://github.com/igowuu/Contango" 
+Documentation = "https://igowuu.github.io/Contango/" 
+Repository = "https://github.com/igowuu/Contango"
 
 [tool.setuptools.packages.find]
 where = ["src"]

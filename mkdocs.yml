@@ -1,4 +1,7 @@
 site_name: Contango
+site_url: https://igowuu.github.io/Contango/ 
+repo_url: https://github.com/igowuu/Contango
+
 theme:
   name: material
 
