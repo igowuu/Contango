@@ -29,7 +29,6 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/igowuu/Contango" 
 Documentation = "https://igowuu.github.io/Contango/" 
 Repository = "https://github.com/igowuu/Contango"
 
@@ -38,3 +37,6 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 pythonpath = "src"
+
+[tool.setuptools.package-data]
+contango = ["py.typed"]

@@ -1,0 +1,35 @@
+global-exclude __pycache__
+global-exclude *.py[cod]
+global-exclude *$py.class
+global-exclude *.so
+
+prune venv
+prune venv-dev
+prune venv-test
+
+prune .pytest_cache
+prune .mypy_cache
+prune .ruff_cache
+prune .pyre
+prune .hypothesis
+
+global-exclude .coverage
+global-exclude .coverage.*
+prune htmlcov
+
+prune .vscode
+prune .idea
+
+global-exclude *.egg-info
+global-exclude *.egg
+prune build
+prune dist
+
+prune graphs
+global-exclude database_storage.db
+global-exclude personal_*
+
+prune site
+
+global-exclude .env
+global-exclude .env.*

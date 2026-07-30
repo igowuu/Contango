@@ -1,27 +1,15 @@
 # Contango
 
 <div align="center">
-    <a href="https://github.com/igowuu/Contango">
-        <img src="docs/media/metric_distribution.avif" width="275">
-    </a>
-    <a href="https://github.com/igowuu/Contango">
-        <img src="docs/media/equity_curve.avif" width="275">
-    </a>
-    <a href="https://github.com/igowuu/Contango">
-        <img src="docs/media/trade_quality.avif" width="275">
-    </a>
+    <img src="https://raw.githubusercontent.com/igowuu/Contango/refs/heads/main/docs/media/metric_distribution.avif" width="32%">
+    <img src="https://raw.githubusercontent.com/igowuu/Contango/refs/heads/main/docs/media/equity_curve.avif" width="32%">
+    <img src="https://raw.githubusercontent.com/igowuu/Contango/refs/heads/main/docs/media/trade_quality.avif" width="32%">
 </div>
 
 <div align="center">
-    <a href="https://github.com/igowuu/Contango">
-        <img src="docs/media/parallel_parameter_combinations.avif" width="275">
-    </a>
-    <a href="https://github.com/igowuu/Contango">
-        <img src="docs/media/risk_return_overview.avif" width="275">
-    </a>
-    <a href="https://github.com/igowuu/Contango">
-        <img src="docs/media/underwater_plot.avif" width="275">
-    </a>
+    <img src="https://raw.githubusercontent.com/igowuu/Contango/refs/heads/main/docs/media/parallel_parameter_combinations.avif" width="32%">
+    <img src="https://raw.githubusercontent.com/igowuu/Contango/refs/heads/main/docs/media/risk_return_overview.avif" width="32%">
+    <img src="https://raw.githubusercontent.com/igowuu/Contango/refs/heads/main/docs/media/underwater_plot.avif" width="32%">
 </div>
 
 <h6 align="center">
@@ -40,7 +28,7 @@
     </a>
 </p>
 
-`Contango` is a python engine to backtest, optimize, create, and graph trading strategies with ease using [Plotly](https://github.com/plotly/plotly.py). Strategies can be parameterized over tens of thousands of parameters to find the optimal regions while allowing unique strategies to be effortlessly compared amongst each other. 
+Contango is a python engine to backtest, optimize, create, and graph trading strategies with ease using [Plotly](https://github.com/plotly/plotly.py). Strategies can be parameterized over tens of thousands of parameters to find the optimal regions while allowing unique strategies to be effortlessly compared amongst each other. 
 
 ## Features
  
@@ -51,28 +39,22 @@
 - **Full metric suite** - return, risk, drawdown, and trade metrics (sharpe, calmar, profit factor, expectancy, and more) generated automatically from a backtest's raw events.
 - **Seven graph types** - risk/return overview, parameter importance, parallel parameter combinations, pairwise heatmap grid, metric distribution, equity curve overlay, underwater drawdown, and trade quality scatter, all built to help you catch overfitting while determining the profitability and risk of your results (six of them are at the top of the README!).
 
-## Installation (copy-paste)
+## Installation
 
 > Requires: Python 3.11+
 
-**Linux/macOS**
 ```bash
-git clone https://github.com/igowuu/Contango.git && cd Contango && python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt
+pip install contango
 ```
 
-**Windows (PowerShell)**
-```powershell
-git clone https://github.com/igowuu/Contango.git; cd Contango; python -m venv .venv; .venv\Scripts\Activate.ps1; pip install -r requirements.txt
-```
-
-> See [in-depth installation docs](https://igowuu.github.io/Contango/getting-started/installation/) if this does not work for you.
+> See [developer installation docs](https://igowuu.github.io/Contango/getting-started/installation/) if you want to build the project without PyPI.
 
 ## Quickstart
 
 ### Run the demo
 
 ```bash
-python -m research.research_strategies.bollinger_band_mean_reversion.runner
+python -m contango.research.research_strategies.bollinger_band_mean_reversion.runner
 ```
 
 This backtests the strategy across a grid of parameters and writes the generated graphs (as HTML files) to `research/research_strategies/bollinger_band_mean_reversion/graphs/`. They can be opened in the browser to explore the results - see [Quickstart docs](https://igowuu.github.io/Contango/getting-started/quickstart/) for a walkthrough of serving them locally (e.g. with the VSCode Live Server extension) if opening the files directly doesn't render them how you would expect.
@@ -194,3 +176,5 @@ See the [documentation](https://igowuu.github.io/Contango/) for everything not c
 ## License
 
 See [LICENSE](https://github.com/igowuu/Contango/blob/main/LICENSE)
+
+---

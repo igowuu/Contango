@@ -3,16 +3,15 @@
 ## Make sure you have correctly installed the project first.
 The project comes with some built-in demo files for you to test.
 
-## Backtest a demo file:
+## Backtest a demo file after installation:
 
-**Windows/Linux/macOS**
 ```bash
-python -m research.research_strategies.bollinger_band_mean_reversion.runner
+python -m contango.research.research_strategies.bollinger_band_mean_reversion.runner
 ```
 
-Under the `research/research_strategies/bollinger_band_mean_reversion` directory, you should see a graphs/ folder, which contains all of the generated graphs as HTML files. Open the folder, and then open the HTML files.
+Under the `research/research_strategies/bollinger_band_mean_reversion` directory (in the folder that you ran the demo command in), you should see a graphs/ folder, which contains all of the generated graphs as HTML files. Open the folder, and then open the HTML files.
 
-To do this, use the VSCode [Live Server Extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) to open the graphs in my defaulted browser. If you already have a way to easily view HTML files: [Jump to Next Steps](#next-steps)
+To do this, use the VSCode [Live Server Extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) to open the graphs in your defaulted browser. If you already have a way to easily view HTML files: [Jump to Next Steps](#next-steps)
 
 ## Setting up a live server
 
