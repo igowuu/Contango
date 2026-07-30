@@ -4455,13 +4455,13 @@ Data that is not already in storage is automatically added.</p>
   </span>
 
 </h4>
-<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_data_and_store</span><span class="p">(</span><span class="n">broker</span><span class="p">:</span> <span class="n">HistoricalBroker</span><span class="p">[</span><span class="n">TConfig</span><span class="p">],</span> <span class="n">config</span><span class="p">:</span> <span class="n">TConfig</span><span class="p">,</span> <span class="n">expected_timestamps</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">datetime</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MarketDataEvent</span><span class="p">]</span>
+<div class="doc-signature highlight"><pre><span></span><code><span class="nf">get_data_and_store</span><span class="p">(</span><span class="n">broker</span><span class="p">:</span> <span class="n">HistoricalBroker</span><span class="p">[</span><span class="n">TConfig</span><span class="p">],</span> <span class="n">config</span><span class="p">:</span> <span class="n">TConfig</span><span class="p">,</span> <span class="n">expected_timestamps</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">datetime</span><span class="p">],</span> <span class="n">database_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MarketDataEvent</span><span class="p">]</span>
 </code></pre></div>
 
     <div class="doc doc-contents ">
 
-        <p>Retrieves data from either the database, a broker, or both. 
-Any data not in the databse that is retrieved from the broker is then put into storage for further use.</p>
+        <p>Retrieves data from either the database, a broker, or both.
+Any data not in the database that is retrieved from the broker is then put into storage for further use.</p>
 
 
 <p><span class="doc-section-title">Parameters:</span></p>
@@ -4480,7 +4480,7 @@ Any data not in the databse that is retrieved from the broker is then put into s
                 <code>broker</code>
             </td>
             <td>
-                  <code><a class="autorefs autorefs-internal" title="HistoricalBroker (broker.historical_brokers.historical_broker.HistoricalBroker)" href="../../broker/historical_brokers/historical_broker/#broker.historical_brokers.historical_broker.HistoricalBroker">HistoricalBroker</a>[<span title="data.data_repository.TConfig">TConfig</span>]</code>
+                  <code><span title="contango.broker.historical_brokers.historical_broker.HistoricalBroker">HistoricalBroker</span>[<span title="data.data_repository.TConfig">TConfig</span>]</code>
             </td>
             <td>
               <div class="doc-md-description">
@@ -4523,14 +4523,31 @@ Any data not in the databse that is retrieved from the broker is then put into s
                 <em>required</em>
             </td>
           </tr>
+          <tr class="doc-section-item">
+            <td>
+                <code>database_path</code>
+            </td>
+            <td>
+                  <code><span title="str">str</span> | <span title="pathlib.Path">Path</span> | None</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Where the database should live. If not provided,
+           DataStorage resolves it via  the OS-standard
+           user data directory.</p>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
       </tbody>
     </table>
 
 
             <details class="mkdocstrings-source">
-              <summary>Source code in <code>src\data\data_repository.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">39</span>
-<span class="normal">40</span>
+              <summary>Source code in <code>src\contango\data\data_repository.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">40</span>
 <span class="normal">41</span>
 <span class="normal">42</span>
 <span class="normal">43</span>
@@ -4564,22 +4581,31 @@ Any data not in the databse that is retrieved from the broker is then put into s
 <span class="normal">71</span>
 <span class="normal">72</span>
 <span class="normal">73</span>
-<span class="normal">74</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
+<span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@staticmethod</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">get_data_and_store</span><span class="p">(</span>
-    <span class="n">broker</span><span class="p">:</span> <span class="n">HistoricalBroker</span><span class="p">[</span><span class="n">TConfig</span><span class="p">],</span> 
+    <span class="n">broker</span><span class="p">:</span> <span class="n">HistoricalBroker</span><span class="p">[</span><span class="n">TConfig</span><span class="p">],</span>
     <span class="n">config</span><span class="p">:</span> <span class="n">TConfig</span><span class="p">,</span>
-    <span class="n">expected_timestamps</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">datetime</span><span class="p">]</span>
+    <span class="n">expected_timestamps</span><span class="p">:</span> <span class="n">Iterable</span><span class="p">[</span><span class="n">datetime</span><span class="p">],</span>
+    <span class="n">database_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">MarketDataEvent</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Retrieves data from either the database, a broker, or both. </span>
-<span class="sd">    Any data not in the databse that is retrieved from the broker is then put into storage for further use.</span>
+<span class="sd">    Retrieves data from either the database, a broker, or both.</span>
+<span class="sd">    Any data not in the database that is retrieved from the broker is then put into storage for further use.</span>
 
 <span class="sd">    Args:</span>
 <span class="sd">        broker: The historical broker to derive data from if necessary.</span>
 <span class="sd">        config: The corresponding config to the historical broker.</span>
 <span class="sd">        expected_timestamps: An iterable of the expected timestamps.</span>
+<span class="sd">        database_path: Where the database should live. If not provided,</span>
+<span class="sd">                       DataStorage resolves it via  the OS-standard</span>
+<span class="sd">                       user data directory.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">with</span> <span class="n">DataStorage</span><span class="p">()</span> <span class="k">as</span> <span class="n">storage</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">DataStorage</span><span class="p">(</span><span class="n">database_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">storage</span><span class="p">:</span>
         <span class="n">ticker</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">ticker</span>
         <span class="n">interval</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">interval</span><span class="o">.</span><span class="fm">__str__</span><span class="p">()</span>
         <span class="n">start_timestamp</span> <span class="o">=</span> <span class="n">config</span><span class="o">.</span><span class="n">start_timestamp</span>
