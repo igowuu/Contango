@@ -29,5 +29,9 @@ personal_*
 
 site/
 
+backtest.prof
+profile_backtest.py
+test.py
+
 .env
 .env.*

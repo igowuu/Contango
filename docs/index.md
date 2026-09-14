@@ -1,32 +1,42 @@
 # Contango
 
-Contango is a python engine for backtesting, optimizing, and graphing trading strategies. This covers everything not already in the README - the strategy/event module, optimizer, brokers, calenders, indicators, and how to read the generated graphs.
-
-If you are new, start with the **Getting Started** section. If you already have a strategy running and want to understand a specific piece (events, the optimizer, a graph type), jump straight inot the relevant section below.
+Contango is a python engine to backtest, parameterize, and graph trading strategies.
 
 ## Getting Started
 
-- **[Installation](./getting-started/installation.md)** - environment setup, depencencies.
+- [Installation](getting-started/installation.md)
 
-- **[Quickstart](./getting-started/quickstart.md)** - run the demo strategy and serve the generated graphs locally.
+## Strategies
 
-## Core Concepts
+There's two ways to build a strategy. If you want full control, subclass `Strategy` directly and write everything yourself. If you'd rather create strategies quicker, `RuleBasedStrategy` gives you streams, conditions, rules, intents, and position sizing so you can compose a strategy without writing as much boilerplate.
 
-- **[Engine](./trading/execution/engine.md)** - event types, the event bus, and the `Strategy` base class.
+- [Strategy](strategy/strategy.md)
+- [Rule-Based Strategy](strategy/rule-based/rule_based_strategy.md)
+    - [Streams](stream/streams.md)
+    - [Conditions](strategy/rule-based/conditions.md)
+    - [Actions](strategy/rule-based/actions.md)
+    - [Rules](strategy/rule-based/rules.md)
+    - [Intents](strategy/rule-based/intents.md)
+    - [Position Sizers](strategy/rule-based/position_sizers.md)
+    - [Contexts](strategy/rule-based/contexts.md)
+- [Indicators](stream/indicators/indicators.md)
 
-- **[Brokers](./broker/historical-brokers.md)** - how historical brokers (e.g. `Yfinance`) fetch OHLCV data & how to use them.
+## Data
 
-- **[Calendars](./broker/calendar.md)** - how calendars (e.g. `NYSECalendar`) define tradeable dates, and how the data repository avoids re-fetching cached data.
+Historical data comes from a data provider (Yfinance works with no API key needed), gets checked against a calendar for expected timestamps, and gets cached locally so you're not polling the same data.
 
-- **[Backtester](./trading/execution/backtester.md)** - how fills, slippage, and commission are simulations, current limitations, and how the backtester works.
+- [Data Repository](data/repository.md)
+- [Historical Data Providers](market/historical-data-provider.md)
+- [Calendars](market/calendar.md)
 
-- **[Indicators & State Machines](./trading/indicators/indicators.md)** - built-in indicators (ATR, Bollinger Bands, EMA, RSI, SMA, VWAP, Wilder Average) and the state machines strategies can signal off of.
+## Running Backtests
 
-## Trading
+- [Engine](trading/execution/engine.md)
+- [Backtester](trading/execution/backtester.md)
+- [Static Runner](runners/static_runner.md) - runs a single strategy once.
+- [Grid Search Runner](runners/grid_search_runner.md) - runs every combination of a parameter grid.
 
-- **[Optimizer](trading/optimizer/analysis.md)** - how the optimizer works & what each computed metric (sharpe, calmar, PnL, expectancy, etc.) means.
-- **[Graphing](trading/analyzer/graphing.md)** - how to read each of the seven graph types, what to look for in each of the graphs, and examples to walk through each of the graph types.
+## Analysis
 
-## Reference
-
-- **[Reference Documentation](./reference/index.md)**
+- [Metric Generation](trading/metrics/generation.md)
+- [Graphing](trading/analysis/graphing.md)

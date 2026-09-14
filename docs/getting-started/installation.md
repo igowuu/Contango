@@ -1,6 +1,6 @@
 # Installation
 
-**Requires Python 3.10+ & git**
+**Requires Python 3.11+ & git**
 
 ## Open a terminal and clone the repository:
 
@@ -47,7 +47,3 @@ source .venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
-
-## Next steps
-
-Once installed, head to [Quickstart](./quickstart.md) to backtest & analyze your first strategy.

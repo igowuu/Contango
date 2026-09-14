@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "contango"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Python engine to backtest, optimize, and graph trading strategies"
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -18,7 +18,7 @@ classifiers = [
     "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
-    "Topic :: Office/Business :: Financial :: Investment",
+    "Topic :: Investment",
 ]
 dependencies = [
     "exchange_calendars>=4.13.2",

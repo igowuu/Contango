@@ -17,7 +17,7 @@ Some of the main events (but not necessarily limited to):
 - `RejectedFillEvent` - An order that was rejected and was not filled.
 - `PortfolioSnapshotEvent` - A snapshot of the portfolio for the current period in time.
 
-See [event reference](../../reference/trading/execution/engine/events/events.md)
+See [event reference](../../reference/trading/execution/engine/events/types.md)
 and [event bus reference](../../reference/trading/execution/engine/events/event_bus.md)
 
 ## Orders
@@ -38,7 +38,7 @@ A strategy is the base class that creates orders for the rest of the engine or m
 
 Variables such as `order_api` and `portfolio_snapshot` are injected and updated consistently to allow orders to be made and access the updated portfolio state respectively.
 
-See [strategy reference](../../reference/trading/execution/engine/strategy/strategy.md)
+See [strategy reference](../../reference/strategy/strategy.md)
 
 ## See More
 

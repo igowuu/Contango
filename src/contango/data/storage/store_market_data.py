@@ -1,19 +1,3 @@
-# data/storage/store_market_data.py — part of Contango, a parameterized backtesting & execution framework
-# Copyright (C) 2026  Jacob Taylor
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Affero General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU Affero General Public License for more details.
-#
-# You should have received a copy of the GNU Affero General Public License
-# along with this program. If not, see <https://www.gnu.org/licenses/>.
-
 from __future__ import annotations
 
 import sqlite3
@@ -24,7 +8,7 @@ from typing import Iterable
 
 from platformdirs import user_data_dir
 
-from contango.trading.execution.engine.events.events import MarketDataEvent
+from contango.trading.execution.engine.events.types import MarketDataEvent
 
 
 _DEFAULT_DB_FILENAME = "database_storage.db"
@@ -59,7 +43,7 @@ class DataStorage:
 
         Args:
             database_path: Where to store the database. If not provided, falls
-                           back to the OS-standard user data directory %LOCALAPPDATA%\\contango\\contango on Windows).
+                           back to the OS-standard user data directory.
         """
         resolved_path = Path(database_path) if database_path is not None else _default_database_path()
         resolved_path.parent.mkdir(parents=True, exist_ok=True)
@@ -71,7 +55,7 @@ class DataStorage:
 
     def _create_tables(self) -> None:
         """
-        Creates an empty table with no data inside of it under the database.
+        Creates the empty tables under the database if they don't already exist.
         """
         self._connection.execute(
             """
@@ -90,6 +74,18 @@ class DataStorage:
             """
         )
 
+        self._connection.execute(
+            """
+            CREATE TABLE IF NOT EXISTS symbol_coverage (
+                symbol TEXT NOT NULL,
+                interval TEXT NOT NULL,
+                earliest_available_timestamp INTEGER NOT NULL,
+
+                PRIMARY KEY(symbol, interval)
+            )
+            """
+        )
+
         self._connection.commit()
 
     def add_data_to_storage(
@@ -98,7 +94,7 @@ class DataStorage:
         data: list[MarketDataEvent],
     ) -> None:
         """
-        Adds market data to storage. Existing candles with the same symbol/interval/timestamp are ignored.
+        Adds market data to storage. Any existig candles with the same symbol/interval/timestamp are ignored.
 
         Args:
             interval: The interval to save the data as (i.e. `1m`, `5m`, etc).
@@ -144,7 +140,7 @@ class DataStorage:
         end_timestamp: int,
     ) -> list[MarketDataEvent]:
         """
-        Retrieves market data in chronological order by timestamp.
+        Retrieves market data in order by timestamp.
 
         Args:
             symbol: The symbol to derive data from.
@@ -153,7 +149,7 @@ class DataStorage:
             end_timestamp: The end timestamp in unix ms.
 
         Returns:
-            list[MarketDataEvent]: The data for the provided parameters, if any.
+            list[MarketDataEvent]: The data for the provided parameters.
         """
         cursor = self._connection.execute(
             """
@@ -197,11 +193,11 @@ class DataStorage:
         symbol: str,
         interval: str,
         expected_timestamps: Iterable[datetime],
+        earliest_available: int | None = None,
     ) -> list[int]:
         """
         Returns the timestamps that are NOT currently stored for the given
-        symbol/interval, out of a caller-supplied set of expected timestamps.
-        Callers are responsible for generating the correct expected schedule.
+        symbol or interval, out of a supplied set of expected timestamps.
 
         Args:
             symbol: The symbol to check.
@@ -209,10 +205,13 @@ class DataStorage:
             expected_timestamps: The datetimes candles are expected to exist
                                  for. Must be timezone-aware (or assumed UTC if naive) since
                                  stored timestamps are unix ms in UTC.
+            earliest_available: If provided, expected timestamps earlier than
+                                this (unix ms) are dropped before the missing-check,
+                                since they're already known to have no data
+                                available from the provider.
 
         Returns:
-            list[int]: Sorted list of missing timestamps (unix ms). Empty if
-                       fully cached.
+            list[int]: Sorted list of missing timestamps (unix ms).
         """
         expected_ms = {
             int(
@@ -221,6 +220,9 @@ class DataStorage:
             )
             for ts in expected_timestamps
         }
+
+        if earliest_available is not None:
+            expected_ms = {ts for ts in expected_ms if ts >= earliest_available}
 
         if not expected_ms:
             return []
@@ -244,6 +246,37 @@ class DataStorage:
         existing = {row[0] for row in cursor.fetchall()}
 
         return sorted(expected_ms - existing)
+
+    def get_earliest_available(self, symbol: str, interval: str) -> int | None:
+        """
+        Returns the earliest timestamp (unix ms) known to be a valid lower
+        bound for this symbol/interval's data, if one has been recorded. None if never recorded.
+        """
+        cursor = self._connection.execute(
+            """
+            SELECT earliest_available_timestamp
+            FROM symbol_coverage
+            WHERE symbol = ? AND interval = ?
+            """,
+            (symbol, interval),
+        )
+        row = cursor.fetchone()
+        return row[0] if row is not None else None
+
+    def set_earliest_available(self, symbol: str, interval: str, timestamp: int) -> None:
+        """
+        Records the earliest known-valid lower bound (unix ms) for the
+        symbol/interval.
+        """
+        self._connection.execute(
+            """
+            INSERT INTO symbol_coverage (symbol, interval, earliest_available_timestamp)
+            VALUES (?, ?, ?)
+            ON CONFLICT(symbol, interval) DO UPDATE SET earliest_available_timestamp = excluded.earliest_available_timestamp
+            """,
+            (symbol, interval, timestamp),
+        )
+        self._connection.commit()
 
     def close(self) -> None:
         """
