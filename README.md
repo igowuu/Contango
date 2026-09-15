@@ -58,7 +58,7 @@ pip install contango
 ### Run the demo
 
 ```shell
-python -m contango.research.demo_strategies cartesian_bollinger_strategy.runner 
+python -m contango.research.demo_strategies.cartesian_bollinger_strategy.runner
 ```
 
 The demo runs a Bollinger Band strategy across a Cartesian grid of parameters and generates performance and parameter-analysis graphs. The generated graphs (as HTML files) are saved to the root directory. To see the graphs, open the generated files in a browser.

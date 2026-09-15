@@ -18,14 +18,14 @@ classifiers = [
     "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
-    "Topic :: Investment",
+    "Topic :: Software Development :: Libraries",
 ]
 dependencies = [
-    "exchange_calendars>=4.13.2",
-    "numpy>=2.4.6",
-    "pandas>=3.0.3",
-    "plotly>=6.8.0",
-    "yfinance>=1.4.1",
+    "exchange_calendars==4.13.2",
+    "numpy==2.4.6",
+    "pandas==3.0.3",
+    "plotly==6.8.0",
+    "yfinance==1.4.1",
 ]
 
 [project.urls]
